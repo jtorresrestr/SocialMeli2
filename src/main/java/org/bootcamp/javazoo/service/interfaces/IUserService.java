@@ -9,9 +9,6 @@ import org.bootcamp.javazoo.entity.User;
 import java.util.List;
 
 public interface IUserService {
-
-    User getUserById(Integer userId);
-
     List<Seller> getUserFollowed(Integer userId);
     FollowersListDto getFollowedList(Integer userId, String order);
     MessageDto unfollowSeller(Integer userId, Integer userIdToUnfollow);
