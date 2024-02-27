@@ -30,17 +30,9 @@ public class UserServiceImpl implements IUserService {
 
     @Override
     public FollowersListDto getFollowedList(Integer userId, String order) {
-        User user =  userRepository.getById(userId);
-        if (user == null) {
-            throw new NotFoundException("User not found");
-        }
+        User user =  this.getUserById(userId);
         List<UserDto> sellers;
-        if (order == null) {
-            sellers = user.getFollowed().stream()
-                    .map(sellerService::getById)
-                    .map(Mapper::convertUserToUserDto)
-                    .toList();
-        } else if (order.equals("name_asc")) {
+        if (order == null || order.equals("name_asc")) {
             sellers = user.getFollowed().stream()
                     .map(sellerService::getById)
                     .sorted((o1, o2) -> o1.getName().compareTo(o2.getName()))
@@ -62,7 +54,7 @@ public class UserServiceImpl implements IUserService {
     @Override
     public MessageDto unfollowSeller(Integer userId, Integer userIdToUnfollow) {
 
-        User user = getUserById(userId);
+        User user = this.getUserById(userId);
         Seller seller = sellerService.getById(userIdToUnfollow);
 
         List<Integer> followedList = user.getFollowed();

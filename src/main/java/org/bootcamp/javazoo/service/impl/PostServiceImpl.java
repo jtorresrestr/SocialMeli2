@@ -35,8 +35,8 @@ public class PostServiceImpl implements IPostService {
 
     }
 
-    public List<PostResponseDto> sortPostDto(List<PostResponseDto> posts, String order){
-        if(order.equals("date_asc")){
+    private List<PostResponseDto> sortPostDto(List<PostResponseDto> posts, String order){
+        if(order == null || order.equals("date_asc")){
             return posts.stream()
                     .sorted(Comparator.comparing(PostResponseDto::getDate))
                     .collect(Collectors.toList());
@@ -49,10 +49,8 @@ public class PostServiceImpl implements IPostService {
             throw new BadRequestException("'order' parameter in endpoint path is invalid");
         }
     }
-    @Override
-    public List<PostResponseDto> getPostsBySeller(int userId, String order){
+    private List<PostResponseDto> getPostsBySeller(int userId, String order){
         List<Seller> sellers = userService.getUserFollowed(userId);
-        if(sellers.isEmpty()) throw new NotFoundException("the user does not follow any seller");
         return sellers.stream().flatMap(seller1 -> {
             if(!seller1.getPosts().isEmpty()){
                 List<Post> postBySeller = filterPostsByWeeksAgo(2, seller1.getPosts().stream().map(postRepository::getById).toList());
@@ -64,13 +62,11 @@ public class PostServiceImpl implements IPostService {
     }
     @Override
     public PostsFollowedUserDto getPostsBySellerOfUser(int userId, String order){
-        List<PostResponseDto> postDtos = getPostsBySeller(userId, order);
-        if(!(order == null)){
-            postDtos = sortPostDto(postDtos, order);
-        }
+        List<PostResponseDto> postDtos = this.getPostsBySeller(userId, order);
+        postDtos = this.sortPostDto(postDtos, order);
         return Mapper.mapToPostsFollowedUserDto(postDtos, userId);
     }
-    public List<Post> filterPostsByWeeksAgo(int weeks, List<Post> posts){
+    private List<Post> filterPostsByWeeksAgo(int weeks, List<Post> posts){
         LocalDate weeksAgo = LocalDate.now().minusWeeks(weeks);
         return posts.stream()
                 .filter(post -> post.getDate().isAfter(weeksAgo))
@@ -79,9 +75,6 @@ public class PostServiceImpl implements IPostService {
     @Override
     public MessageDto addNewPost(PostDto postDto) {
         Seller seller = sellerService.getById(postDto.getUser_id());
-        if(seller == null) {
-            throw new NotFoundException("Seller not found");
-        }
         Post post = Mapper.convertDtoToPost(postDto, postRepository.getCounter());
         postRepository.addNewPost(post);
         seller.addPost(post.getId());

@@ -7,6 +7,7 @@ import org.bootcamp.javazoo.exception.BadRequestException;
 import org.bootcamp.javazoo.helper.Mapper;
 import org.bootcamp.javazoo.repository.interfaces.IUserRepository;
 import org.bootcamp.javazoo.dto.response.CountFollowersDto;
+import org.bootcamp.javazoo.service.interfaces.IUserService;
 import org.springframework.stereotype.Service;
 import org.bootcamp.javazoo.dto.UserDto;
 import org.bootcamp.javazoo.dto.response.FollowersListDto;
@@ -20,33 +21,25 @@ import java.util.List;
 @Service
 public class SellerServiceImpl implements ISellerService {
     private final ISellerRepository sellerRepository;
-    private final IUserRepository userRepository;
+    private final IUserService userService;
 
-    public SellerServiceImpl(ISellerRepository sellerRepository, IUserRepository userRepository) {
+    public SellerServiceImpl(ISellerRepository sellerRepository, IUserService userService) {
         this.sellerRepository = sellerRepository;
-        this.userRepository = userRepository;
+        this.userService = userService;
     }
     @Override
     public FollowersListDto getFollowersListService(Integer userId, String order) {
-        Seller seller = sellerRepository.findById(userId);
-        if (seller == null) {
-            throw new NotFoundException("Seller not found");
-        }
+        Seller seller = this.getById(userId);
         List<UserDto> followers;
-        if (order == null) {
+        if (order == null || order.equals("name_asc")) {
             followers = seller.getFollowers().stream()
-                    .map(userRepository::getById)
-                    .map(Mapper::convertUserToUserDto)
-                    .toList();
-        } else if (order.equals("name_asc")) {
-            followers = seller.getFollowers().stream()
-                    .map(userRepository::getById)
+                    .map(userService::getUserById)
                     .sorted((o1, o2) -> o1.getName().compareTo(o2.getName()))
                     .map(Mapper::convertUserToUserDto)
                     .toList();
         } else if (order.equals("name_desc")) {
             followers = seller.getFollowers().stream()
-                    .map(userRepository::getById)
+                    .map(userService::getUserById)
                     .sorted((o1, o2) -> o2.getName().compareTo(o1.getName()))
                     .map(Mapper::convertUserToUserDto)
                     .toList();
@@ -59,10 +52,7 @@ public class SellerServiceImpl implements ISellerService {
 
     @Override
     public CountFollowersDto getFollowersListCount(Integer userId) {
-        Seller seller = sellerRepository.findById(userId);
-        if (seller == null) {
-            throw new NotFoundException("Seller not found");
-        }
+        Seller seller = this.getById(userId);
 
         int followersCount = seller.getFollowers().size();
         return new CountFollowersDto(userId, seller.getName(), followersCount);
@@ -74,21 +64,16 @@ public class SellerServiceImpl implements ISellerService {
         if (seller == null) throw new NotFoundException("Seller not found");
         return seller;
     }
+    @Override
     public MessageDto addFollow(Integer userId, Integer userToFollowId) {
         if (userId.equals(userToFollowId)) {
             throw new BadRequestException("A user cannot follow themselves.");
         }
-        User user = userRepository.getById(userId);
-        Seller seller = sellerRepository.findById(userToFollowId);
-        if (user == null) {
-            throw new NotFoundException("User not found");
-        }
-        if (seller == null) {
-            throw new NotFoundException("Seller not found");
-        }
+        User user = userService.getUserById(userId);
+        Seller seller = this.getById(userToFollowId);
 
         boolean alreadyFollowing = user.getFollowed().stream()
-                .map(sellerRepository::findById)
+                .map(this::getById)
                 .anyMatch(s -> s.getId().equals(seller.getId()));
 
         if (alreadyFollowing) {
