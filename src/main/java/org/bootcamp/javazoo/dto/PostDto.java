@@ -1,9 +1,6 @@
 package org.bootcamp.javazoo.dto;
 
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -12,22 +9,22 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 public class PostDto {
-    @NotNull
-    @Min(0)
+    @NotBlank (message = "The 'id' cannot be empty.")
+    @Positive(message = "The 'id' must be greater than zero")
     private Integer user_id;
 
-    @NotNull
-    @NotBlank
-    @NotEmpty
+    @NotEmpty (message = "The 'name' cannot be empty.")
     private String date;
 
-    @NotNull
+    @NotEmpty (message = "The 'product' cannot be empty.")
+    @NotNull (message = "The 'product' cannot be empty.")
     private ProductDto product;
 
-    @NotNull
+    @NotEmpty (message = "The 'category' cannot be empty.")
     private Integer category;
 
-    @NotNull
+    @NotEmpty (message = "The 'price' cannot be empty.")
     @Min(0)
+    @Max(value = 10000000, message = "The maximum price per product must be 10,000,000")
     private Double price;
 }

@@ -1,9 +1,6 @@
 package org.bootcamp.javazoo.dto;
 
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -13,33 +10,33 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 public class ProductDto {
-    @NotNull
-    @Min(0)
+
+    @NotNull (message = "The 'id' cannot be empty.")
+    @Positive (message = "The 'id' must be greater than zero")
     private Integer product_id;
 
-    @NotNull
-    @NotBlank
-    @NotEmpty
+    @NotEmpty (message = "The 'name' cannot be empty.")
+    @Size (max = 40, message = "The 'name' cannot exceed 40 characters.")
+    @Pattern(regexp = "(^[a-zA-Z0-9 ]*$)", message = "The 'name' cannot have special characters (%, &, $, etc.)")
     private String product_name;
 
-    @NotNull
-    @NotBlank
-    @NotEmpty
+    @NotEmpty (message = "The 'type' cannot be empty.")
+    @Size (max = 15, message = "The 'type' cannot exceed 15 characters.")
+    @Pattern(regexp = "(^[a-zA-Z0-9]*$)", message = "The 'type' cannot have special characters (%, &, $, etc.) or spaces")
     private String type;
 
-    @NotNull
-    @NotBlank
-    @NotEmpty
+    @NotEmpty (message = "The 'brand' cannot be empty.")
+    @Size (max = 25, message = "The 'brand' cannot exceed 25 characters.")
+    @Pattern(regexp = "(^[a-zA-Z0-9]*$)", message = "The 'brand' cannot have special characters (%, &, $, etc.) or spaces")
     private String brand;
 
-    @NotNull
-    @NotBlank
-    @NotEmpty
+    @NotEmpty (message = "The 'color' cannot be empty.")
+    @Size (max = 15, message = "The 'color' cannot exceed 15 characters.")
+    @Pattern(regexp = "(^[a-zA-Z0-9]*$)", message = "The 'color' cannot have special characters (%, &, $, etc.) or spaces")
     private String color;
 
-    @NotNull
-    @NotBlank
-    @NotEmpty
+    @Size (max = 80, message = "The 'notes' cannot exceed 80 characters.")
+    @Pattern(regexp = "(^[a-zA-Z0-9 ]*$)", message = "The 'notes' cannot have special characters (%, &, $, etc.)")
     private String notes;
 
 }
