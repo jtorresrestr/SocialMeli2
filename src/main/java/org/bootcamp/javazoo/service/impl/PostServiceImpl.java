@@ -3,9 +3,9 @@ package org.bootcamp.javazoo.service.impl;
 import org.bootcamp.javazoo.dto.PostResponseDto;
 import org.bootcamp.javazoo.dto.response.MessageDto;
 import org.bootcamp.javazoo.entity.Seller;
-import org.bootcamp.javazoo.exception.NotFoundException;
+import org.bootcamp.javazoo.helper.CollectionSorter;
 import org.bootcamp.javazoo.helper.Mapper;
-import org.bootcamp.javazoo.service.interfaces.ISellerService;
+import org.bootcamp.javazoo.service.interfaces.IFindService;
 import org.springframework.stereotype.Service;
 import org.bootcamp.javazoo.dto.PostDto;
 import org.bootcamp.javazoo.dto.response.PostsFollowedUserDto;
@@ -26,25 +26,20 @@ import java.util.stream.Collectors;
 public class PostServiceImpl implements IPostService {
     private final IUserService userService;
     private final IPostRepository postRepository;
-    private final ISellerService sellerService;
+    private final IFindService findService;
 
-    public PostServiceImpl(IUserService userService, IPostRepository postRepository, ISellerService sellerService) {
+    public PostServiceImpl(IUserService userService, IPostRepository postRepository, IFindService findService) {
         this.userService = userService;
         this.postRepository = postRepository;
-        this.sellerService = sellerService;
+        this.findService = findService;
 
     }
 
     private List<PostResponseDto> sortPostDto(List<PostResponseDto> posts, String order){
         if(order == null || order.equals("date_asc")){
-            return posts.stream()
-                    .sorted(Comparator.comparing(PostResponseDto::getDate))
-                    .collect(Collectors.toList());
-
+            return CollectionSorter.sortCollection(posts, Comparator.comparing(PostResponseDto::getDate));
         } else if (order.equals("date_desc")) {
-            return posts.stream()
-                    .sorted(Comparator.comparing(PostResponseDto::getDate).reversed())
-                    .collect(Collectors.toList());
+            return CollectionSorter.sortCollection(posts, Comparator.comparing(PostResponseDto::getDate).reversed());
         } else {
             throw new BadRequestException("'order' parameter in endpoint path is invalid");
         }
@@ -74,7 +69,7 @@ public class PostServiceImpl implements IPostService {
     }
     @Override
     public MessageDto addNewPost(PostDto postDto) {
-        Seller seller = sellerService.getById(postDto.getUser_id());
+        Seller seller = findService.getSellerById(postDto.getUser_id());
         Post post = Mapper.convertDtoToPost(postDto, postRepository.getCounter());
         postRepository.addNewPost(post);
         seller.addPost(post.getId());
