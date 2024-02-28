@@ -45,15 +45,15 @@ public class MockBuilder {
     }
 
     public static List<Post> postsBuilder() {
-        Post post0 = new Post(0, LocalDate.parse("2024-02-27"), new Product(100, "Barra de Chocolate", "Comida", "Industrias Wonka", "Marrón", "Deliciosa barra de chocolate mágica con la posibilidad de encontrar un billete dorado"), 1, 2.99);
-        Post post1 = new Post(1, LocalDate.parse("2024-02-26"), new Product(101, "Artefacto Antiguo", "Antigüedades", "Civilizaciones Perdidas", "Oro", "Artefacto raro y misterioso descubierto durante una expedición aventurera"), 2, 9999.99);
-        Post post2 = new Post(2, LocalDate.parse("2024-02-25"), new Product(102, "Gobstopper Eterno", "Dulce", "Industrias Wonka", "Multicolor", "Un caramelo que nunca se desvanece, nunca se disuelve y nunca pierde su sabor"), 1, 0.99);
-        Post post3 = new Post(3, LocalDate.parse("2024-02-24"), new Product(103, "Sombrero Fedora", "Ropa", "Equipo del Aventurero", "Marrón", "Sombrero icónico usado por el arqueólogo más renombrado del mundo"), 3, 59.99);
-        Post post4 = new Post(4, LocalDate.parse("2024-02-23"), new Product(104, "Látigo", "Accesorio", "Equipo del Aventurero", "Negro", "Herramienta esencial para cualquier aventurero, perfecta para navegar por terrenos peligrosos"), 3, 29.99);
-        Post post5 = new Post(5, LocalDate.parse("2024-02-22"), new Product(105, "Traje de Spider-Man", "Disfraz", "Innovaciones Parker", "Rojo y Azul", "Traje de alta tecnología diseñado por Peter Parker para mejorar la agilidad y la fuerza"), 4, 199.99);
-        Post post6 = new Post(6, LocalDate.parse("2024-02-21"), new Product(106, "Batimóvil", "Vehículo", "Empresas Wayne", "Negro", "El vehículo definitivo equipado con tecnología de punta para la justicia vigilante"), 5, 250000.00);
-        Post post7 = new Post(7, LocalDate.parse("2024-02-20"), new Product(107, "Reactor Arc", "Tecnología", "Industrias Stark", "Plata", "Fuente de energía limpia capaz de alimentar desde un corazón hasta un rascacielos"), 6, 5000.00);
-        Post post8 = new Post(8, LocalDate.parse("2024-02-19"), new Product(108, "Traje de Iron Man", "Armadura", "Industrias Stark", "Rojo y Oro", "Traje exoesqueleto avanzado que proporciona fuerza sobrehumana y capacidad de vuelo"), 4, 150000.00);
+        Post post0 = new Post(0, LocalDate.parse("27-02-2024"), new Product(100, "Barra de Chocolate", "Comida", "Industrias Wonka", "Marrón", "Deliciosa barra de chocolate mágica con la posibilidad de encontrar un billete dorado"), 1, 2.99);
+        Post post1 = new Post(1, LocalDate.parse("26-02-2024"), new Product(101, "Artefacto Antiguo", "Antigüedades", "Civilizaciones Perdidas", "Oro", "Artefacto raro y misterioso descubierto durante una expedición aventurera"), 2, 9999.99);
+        Post post2 = new Post(2, LocalDate.parse("25-02-2024"), new Product(102, "Gobstopper Eterno", "Dulce", "Industrias Wonka", "Multicolor", "Un caramelo que nunca se desvanece, nunca se disuelve y nunca pierde su sabor"), 1, 0.99);
+        Post post3 = new Post(3, LocalDate.parse("24-02-2024"), new Product(103, "Sombrero Fedora", "Ropa", "Equipo del Aventurero", "Marrón", "Sombrero icónico usado por el arqueólogo más renombrado del mundo"), 3, 59.99);
+        Post post4 = new Post(4, LocalDate.parse("23-02-2024"), new Product(104, "Látigo", "Accesorio", "Equipo del Aventurero", "Negro", "Herramienta esencial para cualquier aventurero, perfecta para navegar por terrenos peligrosos"), 3, 29.99);
+        Post post5 = new Post(5, LocalDate.parse("22-02-2024"), new Product(105, "Traje de Spider-Man", "Disfraz", "Innovaciones Parker", "Rojo y Azul", "Traje de alta tecnología diseñado por Peter Parker para mejorar la agilidad y la fuerza"), 4, 199.99);
+        Post post6 = new Post(6, LocalDate.parse("21-02-2024"), new Product(106, "Batimóvil", "Vehículo", "Empresas Wayne", "Negro", "El vehículo definitivo equipado con tecnología de punta para la justicia vigilante"), 5, 250000.00);
+        Post post7 = new Post(7, LocalDate.parse("20-02-2024"), new Product(107, "Reactor Arc", "Tecnología", "Industrias Stark", "Plata", "Fuente de energía limpia capaz de alimentar desde un corazón hasta un rascacielos"), 6, 5000.00);
+        Post post8 = new Post(8, LocalDate.parse("19-02-2024"), new Product(108, "Traje de Iron Man", "Armadura", "Industrias Stark", "Rojo y Oro", "Traje exoesqueleto avanzado que proporciona fuerza sobrehumana y capacidad de vuelo"), 4, 150000.00);
 
         return new ArrayList<>(Arrays.asList(post0, post1, post2, post3, post4, post5, post6, post7, post8));
     }
