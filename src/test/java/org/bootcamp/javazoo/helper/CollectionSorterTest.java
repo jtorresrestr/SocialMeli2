@@ -4,8 +4,6 @@ import org.bootcamp.javazoo.dto.UserDto;
 import org.bootcamp.javazoo.exception.BadRequestException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.ArrayList;
 import java.util.Comparator;
