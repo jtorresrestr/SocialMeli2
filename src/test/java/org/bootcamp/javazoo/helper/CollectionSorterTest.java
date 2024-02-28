@@ -2,6 +2,7 @@ package org.bootcamp.javazoo.helper;
 
 import org.bootcamp.javazoo.dto.UserDto;
 import org.bootcamp.javazoo.exception.BadRequestException;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -12,9 +13,11 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+
 class CollectionSorterTest {
 
     @Test
+    @DisplayName("T0003 sortTypeExists - Sort type by name asc")
     void sortUserDtoCollectionByNameAscTest() {
         //Arrange
         List<UserDto> userDtoList = new ArrayList<>();
@@ -33,6 +36,7 @@ class CollectionSorterTest {
     }
 
     @Test
+    @DisplayName("T0003 sortTypeExists - Sort type by name desc")
     void sortUserDtoCollectionByNameDescTest() {
         //Arrange
         List<UserDto> userDtoList = new ArrayList<>();
@@ -51,6 +55,7 @@ class CollectionSorterTest {
     }
 
     @Test
+    @DisplayName("T0003 sortTypeExists - Sort type Invalid")
     void sortUserDtoCollectionInvalidTest() {
         //Arrange
         List<UserDto> userDtoList = new ArrayList<>();
@@ -63,5 +68,4 @@ class CollectionSorterTest {
         //Act & Assert
         assertThrows(BadRequestException.class, () -> CollectionSorter.sortUserDtoCollection(userDtoList, order));
     }
-
 }
