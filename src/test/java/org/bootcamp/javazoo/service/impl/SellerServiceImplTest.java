@@ -23,7 +23,7 @@ class SellerServiceImplTest {
     @InjectMocks
     SellerServiceImpl sellerService;
     @Test
-    @DisplayName("T0003 getFollowersListCount -> Number of followers is correct")
+    @DisplayName("T0007 getFollowersListCount -> Number of followers is correct")
     void getFollowersListCount() {
         //Arrange
         int userId = 1;
