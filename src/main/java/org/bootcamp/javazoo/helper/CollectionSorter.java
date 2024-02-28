@@ -1,5 +1,6 @@
 package org.bootcamp.javazoo.helper;
 
+import org.bootcamp.javazoo.dto.PostResponseDto;
 import org.bootcamp.javazoo.exception.BadRequestException;
 import org.bootcamp.javazoo.dto.UserDto;
 
@@ -21,6 +22,17 @@ public class CollectionSorter {
         }
         return sortCollection(collection, comparator);
     }
+
+    public static List<PostResponseDto> sortPostDtoByDate(List<PostResponseDto> posts, String order){
+        if(order == null || order.equals("date_asc")){
+            return CollectionSorter.sortCollection(posts, Comparator.comparing(PostResponseDto::getDate));
+        } else if (order.equals("date_desc")) {
+            return CollectionSorter.sortCollection(posts, Comparator.comparing(PostResponseDto::getDate).reversed());
+        } else {
+            throw new BadRequestException("'order' parameter in endpoint path is invalid");
+        }
+    }
+
     public static <T> List<T> sortCollection(List<T> collection, Comparator<T> comparator) {
         return collection.stream()
                 .sorted(comparator)
