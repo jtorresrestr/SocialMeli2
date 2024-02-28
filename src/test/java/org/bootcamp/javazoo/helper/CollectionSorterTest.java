@@ -1,10 +1,7 @@
 package org.bootcamp.javazoo.helper;
 
-import org.bootcamp.javazoo.dto.PostDto;
 import org.bootcamp.javazoo.dto.PostResponseDto;
 import org.bootcamp.javazoo.dto.UserDto;
-import org.bootcamp.javazoo.entity.Post;
-import org.bootcamp.javazoo.entity.Seller;
 import org.bootcamp.javazoo.exception.BadRequestException;
 import org.bootcamp.javazoo.repository.impl.PostRepositoryImpl;
 import org.bootcamp.javazoo.service.impl.PostServiceImpl;
@@ -19,27 +16,13 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyInt;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class CollectionSorterTest {
-
-    @Mock
-    UserServiceImpl userService;
-
-    @Mock
-    PostRepositoryImpl postRepository;
-
-    @InjectMocks
-    PostServiceImpl postService;
 
     @Test
     @DisplayName("T0003 sortTypeExists -> Sort type by name asc")

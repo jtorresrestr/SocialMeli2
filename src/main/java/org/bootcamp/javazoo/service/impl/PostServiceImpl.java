@@ -4,6 +4,7 @@ import org.bootcamp.javazoo.dto.PostResponseDto;
 import org.bootcamp.javazoo.dto.response.MessageDto;
 import org.bootcamp.javazoo.entity.Seller;
 import org.bootcamp.javazoo.helper.CollectionSorter;
+import org.bootcamp.javazoo.helper.FilterListByWeeks;
 import org.bootcamp.javazoo.helper.Mapper;
 import org.bootcamp.javazoo.service.interfaces.IFindService;
 import org.springframework.stereotype.Service;
@@ -39,7 +40,7 @@ public class PostServiceImpl implements IPostService {
         List<Seller> sellers = userService.getUserFollowed(userId);
         return sellers.stream().flatMap(seller1 -> {
             if(!seller1.getPosts().isEmpty()){
-                List<Post> postBySeller = filterPostsByWeeksAgo(2, seller1.getPosts().stream().map(postRepository::getById).toList());
+                List<Post> postBySeller = FilterListByWeeks.filterPostsByWeeksAgo(2, seller1.getPosts().stream().map(postRepository::getById).toList());
                 return postBySeller.stream()
                         .map(p -> Mapper.mapToPostDto(p, seller1.getId()));
             }
@@ -51,12 +52,6 @@ public class PostServiceImpl implements IPostService {
         List<PostResponseDto> postDtos = this.getPostsBySeller(userId, order);
         postDtos = CollectionSorter.sortPostDtoByDate(postDtos, order);
         return Mapper.mapToPostsFollowedUserDto(postDtos, userId);
-    }
-    private List<Post> filterPostsByWeeksAgo(int weeks, List<Post> posts){
-        LocalDate weeksAgo = LocalDate.now().minusWeeks(weeks);
-        return posts.stream()
-                .filter(post -> post.getDate().isAfter(weeksAgo))
-                .collect(Collectors.toList());
     }
     @Override
     public MessageDto addNewPost(PostDto postDto) {
