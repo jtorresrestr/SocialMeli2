@@ -27,7 +27,7 @@ public class FindServiceUnitTest {
     private FindServiceImpl findService;
 
     @Test
-    @DisplayName("getSellerById -> when seller is found then return seller")
+    @DisplayName("T0002 getSellerById -> when seller is found then return seller")
     public void getSellerByIdTest() {
         //Arrange
         Seller seller = MockBuilder.sellersBuilder().get(0);
@@ -43,13 +43,13 @@ public class FindServiceUnitTest {
     }
 
     @Test
-    @DisplayName("getSellerById -> when seller is not found then throw NotFoundException")
+    @DisplayName("T0002 getSellerById -> when seller is not found then throw NotFoundException")
     public void getSellerByIdNotFoundTest() {
         //Arrange
         int sellerId = 1;
         when(sellerRepository.findById(sellerId)).thenReturn(null);
 
-        //act
+        //act and assert
         assertThrows(NotFoundException.class, () -> findService.getSellerById(sellerId));
     }
 }
