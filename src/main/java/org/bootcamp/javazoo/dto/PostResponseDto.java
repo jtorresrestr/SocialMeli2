@@ -12,27 +12,17 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 public class PostResponseDto {
-    @NotNull
-    @Min(0)
+
     private Integer user_id;
 
-    @NotNull
-    @Min(0)
     private Integer post_id;
 
-    @NotNull
-    @NotBlank
-    @NotEmpty
     private String date;
 
-    @NotNull
     private ProductDto product;
 
-    @NotNull
     private Integer category;
 
-    @NotNull
-    @Min(0)
     private Double price;
 
 }

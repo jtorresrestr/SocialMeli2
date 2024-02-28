@@ -26,10 +26,7 @@ public class ProductController {
     }
 
     @PostMapping("/post")
-    public ResponseEntity<?> addNewPost(@Valid @RequestBody PostDto postDto, BindingResult bindingResult){
-        if(bindingResult.hasErrors()){
-            throw new BadRequestException("Invalid fields");
-        }
+    public ResponseEntity<?> addNewPost(@Valid @RequestBody PostDto postDto){
         return new ResponseEntity<>(postService.addNewPost(postDto) , HttpStatus.CREATED);
     }
 }
