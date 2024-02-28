@@ -72,6 +72,7 @@ public class PostServiceImpl implements IPostService {
                 .filter(post -> post.getDate().isAfter(weeksAgo))
                 .collect(Collectors.toList());
     }
+
     @Override
     public MessageDto addNewPost(PostDto postDto) {
         Seller seller = sellerService.getById(postDto.getUser_id());
