@@ -35,15 +35,6 @@ public class PostServiceImpl implements IPostService {
 
     }
 
-    private List<PostResponseDto> sortPostDto(List<PostResponseDto> posts, String order){
-        if(order == null || order.equals("date_asc")){
-            return CollectionSorter.sortCollection(posts, Comparator.comparing(PostResponseDto::getDate));
-        } else if (order.equals("date_desc")) {
-            return CollectionSorter.sortCollection(posts, Comparator.comparing(PostResponseDto::getDate).reversed());
-        } else {
-            throw new BadRequestException("'order' parameter in endpoint path is invalid");
-        }
-    }
     private List<PostResponseDto> getPostsBySeller(int userId, String order){
         List<Seller> sellers = userService.getUserFollowed(userId);
         return sellers.stream().flatMap(seller1 -> {
@@ -58,7 +49,7 @@ public class PostServiceImpl implements IPostService {
     @Override
     public PostsFollowedUserDto getPostsBySellerOfUser(int userId, String order){
         List<PostResponseDto> postDtos = this.getPostsBySeller(userId, order);
-        postDtos = this.sortPostDto(postDtos, order);
+        postDtos = CollectionSorter.sortPostDtoByDate(postDtos, order);
         return Mapper.mapToPostsFollowedUserDto(postDtos, userId);
     }
     private List<Post> filterPostsByWeeksAgo(int weeks, List<Post> posts){
