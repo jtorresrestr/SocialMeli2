@@ -25,7 +25,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class CollectionSorterTest {
 
     @Test
-    @DisplayName("T0003 sortTypeExists -> Sort type by name asc")
+    @DisplayName("T0004 sortTypeExists -> Sort type by name asc")
     void sortUserDtoCollectionByNameAscTest() {
         //Arrange
         List<UserDto> userDtoList = new ArrayList<>();
@@ -44,7 +44,7 @@ class CollectionSorterTest {
     }
 
     @Test
-    @DisplayName("T0003 sortTypeExists -> Sort type by name desc")
+    @DisplayName("T0004 sortTypeExists -> Sort type by name desc")
     void sortUserDtoCollectionByNameDescTest() {
         //Arrange
         List<UserDto> userDtoList = new ArrayList<>();
@@ -116,7 +116,7 @@ class CollectionSorterTest {
     }
 
     @Test
-    @DisplayName("T0006 -> sort post by invalid order")
+    @DisplayName("T0005 -> sort post by invalid order")
     void sortPostDtoByDateInvalidTest () {
 
         //Arrange
