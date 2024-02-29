@@ -36,10 +36,10 @@ public class MockBuilder {
     }
 
     public static List<Seller> sellersBuilder() {
-        Seller seller6 = new Seller(6, "Willy Wonka", Arrays.asList(1,2,3,4), Arrays.asList(0, 2));
-        Seller seller7 = new Seller(7, "Indiana Jones", List.of(1), Arrays.asList(1, 3, 4));
-        Seller seller8 = new Seller(8, "Tony Stark", Arrays.asList(3, 1, 2), Arrays.asList(7, 8));
-        Seller seller9 = new Seller(9, "Bruce Wayne", Arrays.asList(4, 2), List.of(6));
+        Seller seller6 = new Seller(6, "Willy Wonka", new ArrayList<>(List.of(1,2,3,4)), Arrays.asList(0, 2));
+        Seller seller7 = new Seller(7, "Indiana Jones", new ArrayList<>(List.of(1)), Arrays.asList(1, 3, 4));
+        Seller seller8 = new Seller(8, "Tony Stark", new ArrayList<>(List.of(3, 1, 2)), Arrays.asList(7, 8));
+        Seller seller9 = new Seller(9, "Bruce Wayne", new ArrayList<>(List.of(4, 2)), List.of(6));
         Seller seller10 = new Seller(10, "Peter Parker", List.of(), List.of(5));
 
         return new ArrayList<>(Arrays.asList(seller6, seller7, seller8, seller9, seller10));
