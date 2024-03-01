@@ -87,12 +87,11 @@ public class ProductIntegrationTest {
 
         String jsonPayload = mapper.writeValueAsString(postDto);
 
-        MvcResult mvcResult = this.mockMvc.perform(post("/products/post")
+        this.mockMvc.perform(post("/products/post")
                     .contentType(MediaType.APPLICATION_JSON)
                     .content(jsonPayload))
                 .andDo(print())
-                .andExpect(status().isCreated())
-                .andReturn();
+                .andExpect(status().isCreated());
     }
 
     @Test
