@@ -7,7 +7,9 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import org.bootcamp.javazoo.dto.PostDto;
 import org.bootcamp.javazoo.dto.PostResponseDto;
 import org.bootcamp.javazoo.dto.ProductDto;
+import org.bootcamp.javazoo.dto.response.MessageDto;
 import org.bootcamp.javazoo.dto.response.PostsFollowedUserDto;
+import org.bootcamp.javazoo.exception.NotFoundException;
 import org.bootcamp.javazoo.service.impl.PostServiceImpl;
 import org.bootcamp.javazoo.util.MockBuilder;
 import org.junit.jupiter.api.BeforeAll;
@@ -26,6 +28,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -50,8 +53,8 @@ public class ProductIntegrationTest {
     @Test
     void testPostListBySellerWhoUserFollow() throws Exception {
         PostsFollowedUserDto postsFollowedUserDto = new PostsFollowedUserDto(4,
-                List.of((new PostResponseDto(1, 2, LocalDate.now().minusDays(5).format(formatter), new ProductDto(2, "Smartphone", "Electronics", "BrandY", "Negro", "Usado"), 2, 300.0)),
-                        (new PostResponseDto(1, 1, LocalDate.now().format(formatter), new ProductDto(1, "Laptop", "Electronics", "BrandX", "Silver", "Buen estado"), 1, 500.0))
+                List.of((new PostResponseDto(1, 1, LocalDate.now().format(formatter), new ProductDto(1, "Laptop", "Electronics", "BrandX", "Silver", "Buen estado"), 1, 500.0)),
+                        (new PostResponseDto(1, 2, LocalDate.now().minusDays(5).format(formatter), new ProductDto(2, "Smartphone", "Electronics", "BrandY", "Negro", "Usado"), 2, 300.0))
                 ));
         String expected = mapper.writeValueAsString(postsFollowedUserDto);
         MvcResult mvcResult = this.mockMvc.perform(MockMvcRequestBuilders.get("/products/followed/{userId}/list", 4))
@@ -62,6 +65,19 @@ public class ProductIntegrationTest {
                 .andReturn();
 
         assertEquals(expected, mvcResult.getResponse().getContentAsString());
+    }
+
+    @Test
+    void testPostListBySellerWhoUserFollowThrow() throws Exception {
+        MessageDto errorDto = new MessageDto("the user does not follow any seller");
+        Integer userId = 5;
+        String errorExpected = mapper.writeValueAsString(errorDto);
+        MvcResult mvcResult = this.mockMvc.perform(MockMvcRequestBuilders.get("/products/followed/{userId}/list", userId))
+                .andDo(print())
+                .andExpect(status().isNotFound())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andReturn();
+        assertEquals(errorExpected, mvcResult.getResponse().getContentAsString());
     }
 
     @Test
